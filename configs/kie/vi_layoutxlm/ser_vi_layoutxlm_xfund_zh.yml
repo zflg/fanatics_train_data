@@ -1,10 +1,10 @@
 Global:
-  use_gpu: True
+  use_gpu: False
   epoch_num: &epoch_num 200
   log_smooth_window: 10
-  print_batch_step: 10
+  print_batch_step: 1
   save_model_dir: ./output/ser_vi_layoutxlm_xfund_zh
-  save_epoch_step: 2000
+  save_epoch_step: 1
   # evaluation is run every 10 iterations after the 0th iteration
   eval_batch_step: [ 0, 19 ]
   cal_metric_during_train: False
@@ -19,7 +19,7 @@ Global:
   # infer_mode: False
 
   save_res_path: ./output/ser/xfund_zh/res
-  kie_rec_model_dir: 
+  kie_rec_model_dir:
   kie_det_model_dir:
   amp_custom_white_list: ['scale', 'concat', 'elementwise_add']
 
@@ -33,7 +33,7 @@ Architecture:
     checkpoints:
     # one of base or vi
     mode: vi
-    num_classes: &num_classes 7
+    num_classes: &num_classes 11
 
 Loss:
   name: VQASerTokenLayoutLMLoss
@@ -52,10 +52,10 @@ Optimizer:
   regularizer:
     name: L2
     factor: 0.00000
-    
+
 PostProcess:
   name: VQASerTokenLayoutLMPostProcess
-  class_path: &class_path train_data/XFUND/class_list_xfun.txt
+  class_path: &class_path train_data/fanatics/class_list_fanatics.txt
 
 Metric:
   name: VQASerTokenMetric
@@ -64,9 +64,9 @@ Metric:
 Train:
   dataset:
     name: SimpleDataSet
-    data_dir: train_data/XFUND/zh_train/image
-    label_file_list: 
-      - train_data/XFUND/zh_train/train.json
+    data_dir: train_data/fanatics/train
+    label_file_list:
+      - train_data/fanatics/train/train.json
     ratio_list: [ 1.0 ]
     transforms:
       - DecodeImage: # load image
@@ -97,15 +97,15 @@ Train:
   loader:
     shuffle: True
     drop_last: False
-    batch_size_per_card: 8
+    batch_size_per_card: 2
     num_workers: 4
 
 Eval:
   dataset:
     name: SimpleDataSet
-    data_dir: train_data/XFUND/zh_val/image
+    data_dir: train_data/fanatics/val
     label_file_list:
-      - train_data/XFUND/zh_val/val.json
+      - train_data/fanatics/val/val.json
     transforms:
       - DecodeImage: # load image
           img_mode: RGB
