@@ -2,7 +2,7 @@ Global:
   use_gpu: False
   epoch_num: &epoch_num 200
   log_smooth_window: 10
-  print_batch_step: 1
+  print_batch_step: 10
   save_model_dir: ./output/ser_vi_layoutxlm_xfund_zh
   save_epoch_step: 1
   # evaluation is run every 10 iterations after the 0th iteration
@@ -97,7 +97,7 @@ Train:
   loader:
     shuffle: True
     drop_last: False
-    batch_size_per_card: 2
+    batch_size_per_card: 4
     num_workers: 4
 
 Eval:
