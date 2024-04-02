@@ -8,7 +8,7 @@ Global:
   # evaluation is run every 5000 iterations after the 4000th iteration
   eval_batch_step: [3000, 2000]
   cal_metric_during_train: False
-  pretrained_model: ./pretrain_models/MobileNetV3_large_x0_5_pretrained
+  pretrained_model: ./pretrained_model/ResNet50_vd_ssld_pretrained
   checkpoints:
   save_inference_dir:
   use_visualdl: False
@@ -105,9 +105,9 @@ Metric:
 Train:
   dataset:
     name: SimpleDataSet
-    data_dir: ./train_data/icdar2015/text_localization/
+    data_dir: ./train_data/fanatics/train
     label_file_list:
-      - ./train_data/icdar2015/text_localization/train_icdar2015_label.txt
+      - ./train_data/fanatics/train/train.json
     ratio_list: [1.0]
     transforms:
       - DecodeImage: # load image
@@ -148,9 +148,9 @@ Train:
 Eval:
   dataset:
     name: SimpleDataSet
-    data_dir: ./train_data/icdar2015/text_localization/
+    data_dir: ./train_data/fanatics/val/
     label_file_list:
-      - ./train_data/icdar2015/text_localization/test_icdar2015_label.txt
+      - ./train_data/fanatics/val/val.json
     transforms:
       - DecodeImage: # load image
           img_mode: BGR
