@@ -2,7 +2,7 @@ from PIL import Image
 from pathlib import Path
 import json
 
-extract_base_path = './train_data/fanatics/det_img'
+extract_base_path = './train_data/fanatics/ocr_det_img'
 
 
 # extract img
@@ -45,6 +45,8 @@ def extract_img(json_dict: dict, source_base_path: Path):
             # get extract img relative path
             extract_path = extract_img_path(img_path, index)
             try:
+                if point['transcription'] == '###':
+                    continue
                 # extract img
                 extract(img_path, point['points'], extract_base_path + '/' + extract_path)
                 # set to extract dict.
@@ -73,5 +75,5 @@ def process(input_path: str, output_path: str):
 
 
 if __name__ == '__main__':
-    process('train_data/fanatics/train/train.json', f'{extract_base_path}/train_extract.json')
-    process('train_data/fanatics/val/val.json', f'{extract_base_path}/val_extract.json')
+    process('train_data/fanatics/train/train_ocr.txt', f'{extract_base_path}/train_extract.json')
+    process('train_data/fanatics/val/val_ocr.txt', f'{extract_base_path}/val_extract.json')
